@@ -10,8 +10,11 @@ npm install -g firebase-tools
 # login to firebase
 firebase login --interactive
 
+# Set environment variable
+firebase functions:config:set withings.client_id="xxx" withings.client_secret="yyy" withings.redirect_uri="zzz"
+
 # start localhost:5000
-fireb0ase serve --only hosting,functions
+firebase serve --only hosting,functions
 
 # deploy
 firebase deploy --only hosting,functions
