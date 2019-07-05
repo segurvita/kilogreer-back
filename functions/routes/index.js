@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const functions = require('firebase-functions');
-var router = express.Router();
+const router = express.Router();
 
 router.get('/', (req, res, next) => {
   console.info('client_id: ', functions.config().withings.client_id);
