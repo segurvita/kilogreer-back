@@ -44,6 +44,5 @@ module.exports = (req, res, next) => {
     message: 'Success!',
     method: req.method,
     code: req.query.code || '',
-    state: req.query.state || '',
   });
 };
