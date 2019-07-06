@@ -1,5 +1,5 @@
 const express = require('express');
-const controller = require('./healthController');
+const controller = require('./codeController');
 
 const router = express.Router({ mergeParams: true });
 
