@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 
 const healthRouter = require('./health/healthRouter');
+const codeRouter = require('./code/codeRouter');
 const oauthRouter = require('./oauth/oauthRouter');
 
 app.use(cors());
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'routes')));
 
 app.use('/', healthRouter);
+app.use('/code', codeRouter);
 app.use('/oauth', oauthRouter);
 
 exports.app = functions.https.onRequest(app);
