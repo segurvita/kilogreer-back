@@ -36,13 +36,9 @@ module.exports = (req, res, next) => {
       redirect_uri: functions.config().withings.redirect_uri,
     }),
   ).then((response) => {
-    console.info('response: ', response);
+    console.info('response: ', response.data);
 
-    return res.status(200).json({
-      message: 'Success!',
-      method: req.method,
-      response,
-    });
+    return res.status(200).json(response.data);
   }).catch((error) => {
     if (error.response) {
       console.error('data: ', error.response.data);
