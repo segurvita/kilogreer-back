@@ -27,7 +27,11 @@ module.exports = (req, res, next) => {
   }
 
   // timestamp
-  const now = Math.floor((new Date()).getTime());
+  const now = new Date();
+  const enddate = Math.floor(now.getTime()/1000);
+  const startdate = enddate - 60*60*24*7;
+  console.info('startdate: ', startdate);
+  console.info('enddate: ', enddate);
 
   axios.get(
     'https://wbsapi.withings.net/measure',
@@ -36,8 +40,8 @@ module.exports = (req, res, next) => {
         action: 'getmeas',
         meastype: 1,
         category: 1,
-        startdate: 0,
-        enddate: now,
+        startdate,
+        enddate,
       },
       headers: {
         Authorization: accessToken,
