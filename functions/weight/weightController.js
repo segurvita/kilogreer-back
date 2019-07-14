@@ -39,7 +39,7 @@ module.exports = (req, res, next) => {
         startdate: 0,
         enddate: now,
       },
-      header: {
+      headers: {
         Authorization: accessToken,
       },
     },
