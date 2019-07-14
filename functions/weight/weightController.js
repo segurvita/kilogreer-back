@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
   const now = Math.floor((new Date()).getTime());
 
   axios.get(
-    'https://account.withings.com/measure',
+    'https://wbsapi.withings.net/measure',
     {
       params: {
         action: 'getmeas',
