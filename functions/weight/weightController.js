@@ -49,9 +49,25 @@ module.exports = (req, res, next) => {
       },
     },
   ).then((response) => {
-    console.info('response: ', response.data);
+    console.info('response.data: ', response.data);
+    console.info('response.status: ', response.status);
 
-    return res.status(200).json(response.data);
+    let statusCode;
+    switch (response.data.status) {
+      case 0:
+        statusCode = 200;
+        break;
+      case 100:
+      case 101:
+      case 102:
+      case 200:
+      case 401:
+        statusCode = 401;
+        break;
+      default:
+        statusCode = 400;
+    }
+      return res.status(statusCode).json(response.data);
   }).catch((error) => {
     if (error.response) {
       console.error('data: ', error.response.data);
