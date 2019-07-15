@@ -67,7 +67,7 @@ module.exports = (req, res, next) => {
       default:
         statusCode = 400;
     }
-      return res.status(statusCode).json(response.data);
+    return res.status(statusCode).json(response.data);
   }).catch((error) => {
     if (error.response) {
       console.error('data: ', error.response.data);
