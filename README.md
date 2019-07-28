@@ -1,4 +1,4 @@
-# withings-weight-back
+# kilogreer-back
 A Firebase express project
 
 ## Build Setup
