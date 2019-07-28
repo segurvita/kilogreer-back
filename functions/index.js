@@ -9,6 +9,7 @@ const healthRouter = require('./health/healthRouter');
 const codeRouter = require('./code/codeRouter');
 const oauthRouter = require('./oauth/oauthRouter');
 const accessTokenRouter = require('./token/accessTokenRouter');
+const refreshTokenRouter = require('./refresh/refreshTokenRouter');
 const weightRouter = require('./weight/weightRouter');
 
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/', healthRouter);
 app.use('/code', codeRouter);
 app.use('/oauth', oauthRouter);
 app.use('/token', accessTokenRouter);
+app.use('/refresh', refreshTokenRouter);
 app.use('/weight', weightRouter);
 
 exports.app = functions.https.onRequest(app);
