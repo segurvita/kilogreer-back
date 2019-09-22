@@ -20,7 +20,8 @@ module.exports = (req, res, next) => {
   const now = new Date();
   const enddate = Math.floor(now.getTime() / 1000);
   //const startdate = enddate - 60*60*24*7;
-  startdate = 1558796400; // 2019/05/26
+  //const startdate = 1558796400; // 2019/05/26
+  const startdate = 0;
   console.info('startdate: ', startdate);
   console.info('enddate: ', enddate);
 
