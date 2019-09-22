@@ -4,15 +4,29 @@ module.exports = (req, res, next) => {
   console.info('Start.');
 
   // parameter validation
-  if (!req.query.code
-    || !req.query.state
-  ) {
-    res.status(400).json({
-      message: 'Error! query not found.',
-      method: req.method,
-      code: req.query.code || '',
-      state: req.query.state || '',
-    });
+  if (!req.query.code) {
+    const error = new Error(JSON.stringify({
+      location: 'query',
+      param: 'code',
+      value: '',
+      msg: 'Error! query not found.'
+    }));
+    error.status = 400;
+    next(error);
+    return;
+  }
+
+  // parameter validation
+  if (!req.query.state) {
+    const error = new Error(JSON.stringify({
+      location: 'query',
+      param: 'state',
+      value: '',
+      msg: 'Error! query not found.'
+    }));
+    error.status = 400;
+    next(error);
+    return;
   }
 
   // config validation
@@ -31,12 +45,15 @@ module.exports = (req, res, next) => {
 
   // state validation
   if (req.query.state !== functions.config().withings.state) {
-    res.status(400).json({
-      message: 'Error! state does not match.',
-      method: req.method,
-      code: req.query.code || '',
-      state: req.query.state || '',
-    });
+    const error = new Error(JSON.stringify({
+      location: 'query',
+      param: 'state',
+      value: '',
+      msg: 'Error! state does not match.'
+    }));
+    error.status = 400;
+    next(error);
+    return;
   }
 
   // response
