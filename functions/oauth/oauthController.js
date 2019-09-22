@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
 
   // parameter validation
   if (!req.query.code
-      || !req.query.state
+    || !req.query.state
   ) {
     res.status(400).json({
       message: 'Error! query not found.',
@@ -17,9 +17,9 @@ module.exports = (req, res, next) => {
 
   // config validation
   if (!functions.config().withings.client_id
-      || !functions.config().withings.client_secret
-      || !functions.config().withings.redirect_uri
-      || !functions.config().withings.state
+    || !functions.config().withings.client_secret
+    || !functions.config().withings.redirect_uri
+    || !functions.config().withings.state
   ) {
     res.status(500).json({
       message: 'Error! config not found.',

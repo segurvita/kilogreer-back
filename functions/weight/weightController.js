@@ -28,7 +28,7 @@ module.exports = (req, res, next) => {
 
   // timestamp
   const now = new Date();
-  const enddate = Math.floor(now.getTime()/1000);
+  const enddate = Math.floor(now.getTime() / 1000);
   //const startdate = enddate - 60*60*24*7;
   startdate = 1558796400; // 2019/05/26
   console.info('startdate: ', startdate);
