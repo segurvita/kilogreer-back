@@ -29,20 +29,6 @@ module.exports = (req, res, next) => {
     return;
   }
 
-  // config validation
-  if (!functions.config().withings.client_id
-    || !functions.config().withings.client_secret
-    || !functions.config().withings.redirect_uri
-    || !functions.config().withings.state
-  ) {
-    res.status(500).json({
-      message: 'Error! config not found.',
-      method: req.method,
-      code: req.query.code || '',
-      state: req.query.state || '',
-    });
-  }
-
   // state validation
   if (req.query.state !== functions.config().withings.state) {
     const error = new Error(JSON.stringify({
