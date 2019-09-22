@@ -1,6 +1,5 @@
 const axios = require('axios');
 const functions = require('firebase-functions');
-const querystring = require('querystring');
 
 module.exports = (req, res, next) => {
   // config varidation
@@ -20,10 +19,15 @@ module.exports = (req, res, next) => {
   // parameter validation
   const accessToken = req.header('Authorization');
   if (!accessToken) {
-    res.status(401).json({
-      message: 'Error! Authorization is not found.',
-      method: req.method,
-    });
+    const error = new Error(JSON.stringify({
+      location: 'header',
+      param: 'Authorization',
+      value: '',
+      msg: 'Error! Authorization is not found.'
+    }));
+    error.status = 401;
+    next(error);
+    return;
   }
 
   // timestamp
@@ -68,21 +72,26 @@ module.exports = (req, res, next) => {
         statusCode = 400;
     }
     return res.status(statusCode).json(response.data);
-  }).catch((error) => {
-    if (error.response) {
-      console.error('data: ', error.response.data);
-      console.error('status: ', error.response.status);
-      console.error('headers: ', error.response.headers);
-    } else if (error.request) {
-      console.error('request: ', error.request);
+  }).catch((err) => {
+    if (err.response) {
+      console.error('data: ', err.response.data);
+      console.error('status: ', err.response.status);
+      console.error('headers: ', err.response.headers);
+    } else if (err.request) {
+      console.error('request: ', err.request);
     } else {
-      console.error('message: ', error.message);
+      console.error('message: ', err.message);
     }
-    console.error('config: ', error.config);
+    console.error('config: ', err.config);
 
-    return res.status(400).json({
-      message: 'Error!',
-      method: req.method,
-    });
+    const error = new Error(JSON.stringify({
+      location: '',
+      param: '',
+      value: '',
+      msg: 'Error!'
+    }));
+    error.status = 400;
+    next(error);
+    return;
   });
 };

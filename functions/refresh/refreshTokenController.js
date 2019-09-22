@@ -19,11 +19,15 @@ module.exports = (req, res, next) => {
 
   // parameter validation
   if (!req.body.refresh_token) {
-    res.status(400).json({
-      message: 'Error! refresh_token not found.',
-      method: req.method,
-      code: req.query.code || '',
-    });
+    const error = new Error(JSON.stringify({
+      location: 'body',
+      param: 'refresh_token',
+      value: '',
+      msg: 'Error! refresh_token not found.'
+    }));
+    error.status = 400;
+    next(error);
+    return;
   }
 
   axios.post(
@@ -38,21 +42,26 @@ module.exports = (req, res, next) => {
     console.info('response: ', response.data);
 
     return res.status(200).json(response.data);
-  }).catch((error) => {
-    if (error.response) {
-      console.error('data: ', error.response.data);
-      console.error('status: ', error.response.status);
-      console.error('headers: ', error.response.headers);
-    } else if (error.request) {
-      console.error('request: ', error.request);
+  }).catch((err) => {
+    if (err.response) {
+      console.error('data: ', err.response.data);
+      console.error('status: ', err.response.status);
+      console.error('headers: ', err.response.headers);
+    } else if (err.request) {
+      console.error('request: ', err.request);
     } else {
-      console.error('message: ', error.message);
+      console.error('message: ', err.message);
     }
-    console.error('config: ', error.config);
+    console.error('config: ', err.config);
 
-    return res.status(400).json({
-      message: 'Error!',
-      method: req.method,
-    });
+    const error = new Error(JSON.stringify({
+      location: '',
+      param: '',
+      value: '',
+      msg: 'Error!'
+    }));
+    error.status = 400;
+    next(error);
+    return;
   });
 };
