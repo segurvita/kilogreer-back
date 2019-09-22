@@ -5,6 +5,8 @@ const path = require('path');
 
 const app = express();
 
+const configValidator = require('./middleware/configValidator');
+
 const healthRouter = require('./health/healthRouter');
 const codeRouter = require('./code/codeRouter');
 const oauthRouter = require('./oauth/oauthRouter');
@@ -27,6 +29,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'routes')));
 
 /**
+ * 共通HTTPヘッダ検証登録 
+ */
+app.use(configValidator);
+
+/**
  * ルーティング登録
  */
 app.use('/', healthRouter);
@@ -39,6 +46,6 @@ app.use('/weight', weightRouter);
 /** 
  * エラーハンドリング 
  */
-app.use(errorHandler); 
+app.use(errorHandler);
 
 exports.app = functions.https.onRequest(app);
